@@ -650,8 +650,9 @@ main {
 		margin-left: -1.25rem;
 		margin-right: -1.25rem;
 		border-radius: 0;
-		min-height: 100vh;
-		height: 100dvh;
+		min-height: clamp(65vh, 120vw, 95vh);
+		height: auto;
+		max-height: none;
 	}
 
 	.illustration-section::after,
@@ -665,8 +666,9 @@ main {
 
 	.illustration-image {
 		object-position: center;
-		min-height: 100%;
-		height: 100%;
+		width: 100%;
+		min-height: clamp(65vh, 120vw, 95vh);
+		height: auto;
 	}
 
 	footer {
