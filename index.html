@@ -25,7 +25,11 @@
 		<header>
 			<div class="top-header">
 				<div class="brand">Reitaku360</div>
-				<nav class="main-nav" aria-label="Primary">
+				<button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+					<span class="nav-toggle__label">MENU</span>
+					<span class="nav-toggle__icon" aria-hidden="true"><span></span></span>
+				</button>
+				<nav class="main-nav" id="primary-navigation" aria-label="Primary">
 					<a
 						class="nav-button"
 						href="https://www.reitaku-u.ac.jp/"
@@ -118,7 +122,7 @@
 							>
 								0
 							</strong>
-							<span>キャリア支援満足度</span>
+							<span>就職率</span>
 						</div>
 					</div>
 				</div>
@@ -272,7 +276,41 @@
 				const root = document.documentElement;
 				const cascadeItems = document.querySelectorAll(".cascade-item");
 				const metricValues = document.querySelectorAll(".metric-value");
+				const navToggle = document.querySelector(".nav-toggle");
+				const primaryNav = document.getElementById("primary-navigation");
 				const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+				const setNavState = (open) => {
+					if (!navToggle || !primaryNav) return;
+					if (open) {
+						document.body.classList.add("nav-open");
+						navToggle.setAttribute("aria-expanded", "true");
+					} else {
+						document.body.classList.remove("nav-open");
+						navToggle.setAttribute("aria-expanded", "false");
+					}
+				};
+
+				setNavState(false);
+
+				navToggle?.addEventListener("click", () => {
+					const isOpen = document.body.classList.contains("nav-open");
+					setNavState(!isOpen);
+				});
+
+				primaryNav?.querySelectorAll("a").forEach((link) => {
+					link.addEventListener("click", () => {
+						if (window.innerWidth <= 960) {
+							setNavState(false);
+						}
+					});
+				});
+
+				window.addEventListener("resize", () => {
+					if (window.innerWidth > 960) {
+						setNavState(false);
+					}
+				});
 
 				const cascadeObserver = new IntersectionObserver(
 					(entries) => {
